@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Find out your forbidden german name</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="card" id="start">
+<img src="karte/intro.png" class="start-image">
+  <button onclick="startTest()">Find yourself</button>
+<div class="icon">
+  <img src="sound.png" alt="Turn on the Sound!">
+</div>
+<div class="card-footer">
+      <button class="about-button" onclick="window.location.href='index.html'">
+    Home
+  </button>
+  <button class="about-button"
+          onclick="window.location.href='about.html'">
+    About
+  </button>
+</div>
+</div>
+
+
+<div class="card hidden" id="quiz">
+<div id="question"></div>
+  <div id="answers"></div>
+<div class="card-footer">
+    <button class="about-button" onclick="window.location.href='index.html'">
+    Restart
+  </button>
+  <button class="about-button"
+          onclick="window.location.href='about.html'">
+    About
+  </button>
+</div>
+</div>
+
+<div class="card hidden" id="sequence">
+  <img id="sequenceImg" src="" style="width:100%; border-radius:20px;">
+<div class="card-footer">
+    <button class="about-button" onclick="window.location.href='index.html'">
+    Home
+  </button>
+  <button class="about-button"
+          onclick="window.location.href='about.html'">
+    About
+  </button>
+</div>
+</div>
+
+
+<div class="card hidden" id="result">
+  <h1 id="finalName"></h1>
+  <div id="resultList"></div>
+<div class="card-footer">
+    <button class="about-button" onclick="window.location.href='index.html'">
+    That can't be right
+  </button>
+  <button class="about-button"
+          onclick="window.location.href='about.html'">
+    About
+  </button>
+</div>
+</div>
+
+
+
+<script>
+
+const questions = [
+
+     {
+  image: "karte/questionchild.png",
+    cursor: "cursor-man",
+    answers: [
+      { text: "Eldest child", sound: "musik/age7.mp3", points: { "Courage": 1, "Doktor": 1, "Eisenstein": 1, "Großherzog": 1, "Holgerson": 1, "Kain": 2, "McDonald": 1, "Matt Eagle": 1, "Micki Lauda": 1, "Nelkenheini": 1, "Pain": 1, "Puhbert": 1, "Prestige": 1, "Grammophon": 1 } },
+      { text: "Middle child", sound: "musik/age4.mp3", points: { "Axel Schweiß": 1, "Jazz": 1, "Shaggy": 1 } },
+      { text: "Youngest child", sound: "musik/age3.mp3", points: { "Bandito": 1, "Bo": 2, "Chaotica": 2, "Crazy Horse": 1, "Dee-Jay": 1, "Frodewin": 1, "Gucci": 1, "Junge": 1, "Knirpsi": 2, "Peanut": 2, "Pi": 1, "Scheißerle": 1, "Störenfried": 2, "Satan": 2, "Seniorina": 1, "Wildchild": 2, "Sonnenschein": 1, "Schnucki": 1, "Urmel": 1, "Prinzessin": 1, "Nemo": 1 } },
+      { text: "Only child", sound: "musik/age1.mp3", points: { "Anakin Skywalker": 1, "Alemmania": 1, "Christ": 2, "Colonia": 1, "Doktor": 1, "Hummer": 1, "Lucifer": 1, "Pepsi Carola": 1, "Pinocchio": 1, "Pfefferminza": 2, "Schneewittchen": 1, "Superman": 1, "Tarzan": 1, "Vagabund": 1, "Verleihnix": 2 } },
+      { text: "Manchild", sound:"musik/age5.mp3", points: { "König": 1, "Batman": 2, "Judas": 1, "Leonardo da Vinci Franz": 1, "Regen": 1, "Shogun": 1, "Rasputin": 1, "Whisky": 1, "Sexmus Ronny": 2 } },
+      { text: "Twin...child", sound: "musik/age6.mp3", points: { "Siebenstern": 1, "Sputnik": 1 } }
+    ]
+  },
+
+  {
+  image: "karte/vibe.png",
+      cursor: "cursor-lip",
+  answers: [
+    {
+      image: "bild/image1.jpeg", sound: "musik/squeak2.mp3",
+      points: { "Bo": 1, "Frodewin": 1, "Holgerson": 1, "Knirpsi": 1, "Nelkenheini": 2, "McDonald": 1, "Puhbert": 2, "Peanut": 2, "Sonnenschein": 2, "Vom Meer": 1 }
+    },
+        {
+      image: "bild/horsey.jpg", sound: "musik/squeak7.mp3",
+      points: { "Blitz": 1, "Crazy Horse": 2, "Großherzog": 1, "Imperial Purity": 1, "Milka": 2, "Porsche": 1, "Ohlove": 1, "Prestige": 2, "Schneewittchen": 1, "Wildwest": 1, "Vagabund": 1, "Sexmus Ronny": 1, "Winnetou": 2 }
+    },
+        {
+      image: "bild/barbie.png",sound: "musik/squeak1.mp3",
+      secret: {   image: "karte/secretsailor.png",
+    answers: [
+      { image: "bild/sailormoon.webp", points: { "Seniorina": 1, "Prinzessin": 2 } },
+      { image: "bild/sailorvenus.jpg", points: { "Apple": 1, "Gucci": 1, "Puppe": 1 } },
+      { image: "bild/sailormars.webp", points: { "Shaklyn": 1 } },
+      { image: "bild/sailorjupiter.webp", points: { "Rosenherz": 1, "Kirsche": 1} },
+      { image: "bild/sailormercury.webp", points: { "Vaginia": 1 } },
+      { image: "bild/sailoruranus.webp", points: { "Pepsi Carola": 1, "Porsche": 1 } },
+      { image: "bild/sailorneptune.webp", points: { "Chanel": 1 } },
+      { image: "bild/sailorpluto.webp", points: { "Champagna": 1 } }
+      ] },
+      points: { "Apple": 1, "Champagna": 1, "Chanel": 1, "Cinderella Melodie": 2, "Gucci": 1, "Kirsche": 1, "Pepsi Carola": 1, "Rosenherz": 1, "Seniorina": 1, "Vaginia": 1, "Shaklyn": 1, "Alemmania": 1, "Puppe": 1, "Porsche": 1, "Prinzessin": 2 }
+    },
+        {
+      image: "bild/beanie.jpg", sound: "musik/squeak5.mp3",
+      points: { "Bluebell": 1, "Excalibur": 1, "Grammophon": 1, "Pain": 2, "Regen": 1, "Thanatos": 2, "Schnucki": 1 }
+    },
+        {
+      image: "bild/oko.jpg",sound: "musik/squeak3.mp3",
+      points: { "Courage": 1, "Frodewin": 1, "Herbstwind": 1, "Klee": 1, "Pi": 1, "Siebenstern": 1, "Woodstock": 2 }
+    },
+        {
+      image: "bild/ddr.jpg",sound: "musik/squeak9.mp3",
+            secret: {   image: "karte/secretsailor.png",
+    answers: [
+      { image: "bild/sailormoon.webp", points: { "Nussi": 1 } },
+      { image: "bild/sailorvenus.jpg", points: { "Fanta": 1 } },
+      { image: "bild/sailormars.webp", points: { "Pfefferminza": 1, "Siebenstern": 1 } },
+      { image: "bild/sailorjupiter.webp", points: { "Rosenherz": 1, "Siebenstern": 1 } },
+      { image: "bild/sailormercury.webp", points: { "Lenin": 1 } },
+      { image: "bild/tuxedo.webp", points: { "Smoky": 1 } },
+      { image: "bild/sailorchibi.webp", points: { "Lucifer": 1, "Satan": 1 } },
+      { image: "bild/sailoruranus.webp", points: { "Pfefferminza": 1 } },
+      { image: "bild/sailorneptune.webp", points: { "Jazz": 1 } },
+      { image: "bild/sailorpluto.webp", points: { "Lenin": 1 } }
+      ] },
+      points: { "Berlin": 2, "Fanta": 1, "Jazz": 1, "Lenin": 2, "Lucifer": 1, "Nussi": 2, "Pfefferminza": 1, "Satan": 2, "Smoky": 1, "Siebenstern": 1 }
+    },
+        {
+      image: "bild/turtle.png",sound: "musik/squeak8.mp3",
+      points: { "Bandito": 2, "Desperado": 2, "Don Armani Karlheinz": 2, "Ferrari": 1, "Nemo": 1, "Matt Eagle": 2, "Superman": 1, "Shogun": 1, "Wildchild": 1, "Tarzan": 2, "Junge": 1, "Urmel": 1, "Dee-Jay" : 1, "Micki Lauda": 1 }
+    },
+        {
+      image: "bild/furby.jpg",sound: "musik/squeak10.mp3",
+      points: { "Axel Schweiß": 1, "Bierstübl": 1, "Katzbachine": 1, "Leonardo da Vinci Franz": 1, "Popcorn": 1, "Regenbogen": 1 }
+    },
+        {
+      image: "bild/troll.png",sound: "musik/squeak6.mp3",
+      points: { "Crazy Horse": 1, "Chaotica": 1, "Nussi": 1, "Scheißerle": 2, "Shaggy": 1, "Störenfried": 1, "Theiler": 1 }
+    },
+        {
+      image: "bild/dog.jpg",sound: "musik/squeak4.mp3",
+      points: { "Anakin Skywalker": 2, "Atomfried": 1, "Batman": 1, "Blecherne": 2, "Doktor": 1, "Eisenstein": 1, "Hummer": 1, "Judas": 1, "Kain": 1, "Stone": 2, "Sturmhard": 1, "Sputnik": 1, "Porsche": 1, "Verleihnix": 1 }
+    }
+  ]
+    },
+
+          {
+  image: "karte/questionplan.png",
+        cursor: "cursor-book",
+    answers: [
+      { text: "It's in my phone calendar",sound: "musik/ping.mp3", points: { "Apple": 1, "Blecherne": 2, "Courage": 1, "Gucci": 1, "Milka": 1, "Puppe": 1, "Stone": 1, "Verleihnix": 1 } },
+      { text: "It's in my can't-live-without physical notebook",sound: "musik/ping.mp3", points: { "Alemmania": 1, "Cinderella Melodie": 1, "Grammophon": 1, "Holgerson": 1, "Leonardo da Vinci Franz": 1, "Nelkenheini": 1, "Pepsi Carola": 1, "Regenbogen": 1, "Rosenherz": 1, "Schneewittchen": 1, "Shaklyn": 1, "Schnucki": 1, "Vom Meer": 1 } },
+      { text: "My assistant will let me know", sound: "musik/ping.mp3",points: { "Batman": 1, "Chanel": 1, "Champagna": 1, "Don Armani Karlheinz": 1, "Doktor": 2, "Großherzog": 1, "König": 2, "Micki Lauda": 1, "Porsche": 1, "Prestige": 1, "Shogun": 2 } },
+      { text: "Mom will tell me", sound: "musik/ping.mp3",points: { "Bo": 1, "Dee-Jay": 1, "Junge": 1, "Knirpsi": 1, "Puhbert": 1, "Peanut": 1, "Scheißerle": 1, "Seniorina": 1 } },
+      { text: "My friends will tell me (hopefully in time)",sound: "musik/ping.mp3", points: { "Blitz": 1, "Berlin": 1, "Chaotica": 1, "Desperado": 1, "Fanta": 1, "Katzbachine": 1, "Nemo": 2, "Popcorn": 1, "Pi": 1, "Regen": 1, "Smoky": 1, "Shaggy": 1, "Pinocchio": 1, "Wildwest": 1 } },
+      { text: "The forest will whisper it to me", sound: "musik/ping.mp3",points: { "Bluebell": 1, "Crazy Horse": 1, "Herbstwind": 2, "Klee": 1, "Lucifer": 1, "Ohlove": 1, "Sonnenschein": 1, "Wildchild": 1, "Siebenstern": 1, "Kirsche": 1, "Nussi": 2 } },
+      { text: "I don't have plans :D",sound: "musik/ping.mp3", points: { "Atomfried": 2, "Grammophon": 1, "Jazz": 2, "McDonald": 1, "Pfefferminza": 2, "Regen": 1, "Whisky": 2, "Tarzan": 2, "Vagabund": 2, "Woodstock": 1 } },
+      { text: "I don't have plans :'(",sound: "musik/ping.mp3", points: { "Axel Schweiß": 2, "Bierstübl": 1, "Eisenstein": 1, "Hummer": 1, "Pain": 2, "Regen": 1, "Sturmhard": 1 } }
+    ]
+  },
+          {
+   image: "karte/questionfilm.png",
+    layout: "vertical",
+        cursor: "cursor-film",
+    answers: [
+      { image: "bild/film1.jpg"
+        ,sound: "musik/film1.mp3", points: { "Apple": 1, "Cinderella Melodie": 2, "Kirsche": 1, "Milka": 1, "Ohlove": 2, "Pepsi Carola": 1, "Puppe": 1, "Pfefferminza": 1, "Regenbogen": 1 } },
+      { image: "bild/film2.jpg", sound: "musik/film2.mp3",
+       points: { "Bo": 2, "Dee-Jay": 1, "Frodewin": 2, "Junge": 2, "Knirpsi": 1, "Nemo": 2, "Puhbert": 1, "Peanut": 1, "Sonnenschein": 1, "Shaggy": 1, "Tarzan": 2, "Schnucki": 1, "Urmel": 2, "Vom Meer": 1 } },
+      { image: "bild/film3.jpg",sound: "musik/film3.mp3",
+       points: { "Bandito": 1, "Jazz": 1, "Lenin": 2, "Prestige": 1 } },
+      { image: "bild/film4.jpg",sound: "musik/film4.mp3",
+       points: { "Berlin": 1, "Blecherne": 1, "Bluebell": 1, "Desperado": 1, "Pain": 2, "Regen": 1, "Thanatos": 2, "Sexmus Ronny": 1 } },
+      { image: "bild/film5.jpg",sound: "musik/film5.mp3",
+       points: { "Christ": 1, "Excalibur": 1, "Fanta": 2, "Holgerson": 1, "Schneewittchen": 1, "Prinzessin": 2, "Sputnik": 1 } },
+      { image: "bild/film6.jpg",sound: "musik/film6.mp3",
+       points: { "Herbstwind": 2, "Klee": 2, "Rosenherz": 2, "Seniorina": 1, "Wildchild": 1, "Shaklyn": 1, "Schnucki": 1, "Vom Meer": 1 } },
+      { image: "bild/film7.jpg",sound: "musik/film7.mp3",
+       points: { "Bierstübl": 1, "Eisenstein": 1, "Ferrari": 1, "Großherzog": 1, "Grammophon": 1, "Imperial Purity": 2, "Hummer": 1, "König": 1, "Micki Lauda": 1, "McDonald": 1, "Popcorn": 2, "Porsche": 1, "Superman": 2, "Shogun": 2, "Wildwest": 2, "Whisky": 2, "Winnetou": 2 } },
+      { image: "bild/film9.jpg",sound: "musik/film8.mp3",
+       points: { "Courage": 2, "Champagna": 1, "Jazz": 1, "Katzbachine": 1, "Puppe": 1, "Smoky": 1, "Vaginia": 2 } },
+      { image: "bild/film10.jpg",sound: "musik/film9.mp3",
+       points: { "Anakin Skywalker": 1, "Axel Schweiß": 1, "Christ": 1, "Kain": 2, "Nussi": 1, "Pinocchio": 1, "Störenfried": 1, "Sturmhard": 2, "Matt Eagle": 1, "Vagabund": 1, "Theiler": 1 } },
+      { image: "bild/film11.jpg",sound: "musik/film10.mp3",
+       points: { "Excalibur": 2, "Katzbachine": 1, "Lucifer": 2, "Rasputin": 1, "Schneewittchen": 1, "Satan": 2, "Smoky": 1, "Siebenstern": 2 } }
+    ]
+  },
+    {
+  image: "karte/questionemoji.png",
+cursor: "cursor-face",
+    answers: [
+      { text: "🙈🙉🙊 - Early signs of incompetence.",sound: "musik/emoji.wav", points: { "Blitz": 1, "Batman": 1, "Ferrari": 1, "Gucci": 1, "Micki Lauda": 1, "Superman": 1, "Vaginia": 1, "Excalibur": 1, "Verleihnix": 2 } },
+      { text: "💪 - Hollow image of the capitalist lie.",sound: "musik/emoji.wav", points: { "Courage": 1, "Lenin": 2, "Sputnik": 1 } },
+      { text: "😉 - passive aggressiveness for people pleasers. ",sound: "musik/emoji.wav", points: { "Cinderella Melodie": 1, "Eisenstein": 1, "Frodewin": 1, "Ohlove": 1, "Pepsi Carola": 1, "Sonnenschein": 1, "Shaggy": 1, "Shaklyn": 1, "Vom Meer": 1 } },
+      { text: "🤪 You aren't that degenerated yet Karen, get yourself together.",sound: "musik/emoji.wav", points: { "Apple": 2, "Berlin": 2, "Chanel": 1, "Junge": 1, "Porsche": 1, "Prestige": 1, "Regen": 1, "Schneewittchen": 1 } },
+      { text: "👿 Have some respect for your lord and master Satan. ",sound: "musik/emoji.wav", points: { "Excalibur": 1, "Judas": 1, "Kain": 1, "Lucifer": 2, "Störenfried": 1, "Satan": 2, "Siebenstern": 2, "Theiler": 1 } },
+      { text: "👍🏼 Do you like it? Is it just okay? Are you mad? Just give me a sentence or a word at least, am I worth nothing to you?",sound: "musik/emoji.wav", points: { "Desperado": 1, "Dee-Jay": 1, "Herbstwind": 1, "Nelkenheini": 1, "Popcorn": 1, "Regenbogen": 1, "Schnucki": 1 } },
+      { text: "🍑 and 🍆. It gives teen magazine editors who struggle to write an article about sexting.",sound: "musik/emoji.wav", 
+secret: {   image: "karte/secretfood.png",
+    answers: [
+      { text: "Chocolate", points: { "Milka": 1 } },
+      { text: "Nuts", points: { "Nussi": 1 } },
+      { text: "Spaßgetränke", points: { "Fanta": 1, "Pepsi Carola": 1 } },
+      { text: "Mini Wini Würstchen Kette", points: { "Matt Eagle": 1 } },
+      { text: "Cherries, Strawberries, Raspberries", points: { "Kirsche": 1, "Prinzessin": 1 } },
+      { text: "Shellfish", points: { "Hummer": 1 } },
+      { text: "Popcorn", points: { "Popcorn": 2 } },
+      { text: "Everything bio", points: { "Nelkenheini": 1 } },
+      { text: "Everything but bio", points: { "McDonald": 1 } }
+      ] },
+        points: { "Champagna": 1, "Fanta": 1, "Kirsche": 1, "Katzbachine": 1, "Milka": 1, "Puppe": 1, "Seniorina": 1, "McDonald": 1, "Prinzessin": 1 } },
+      { text: "⍰", sound: "musik/emoji.wav",points: { "Bierstübl": 1, "Bo": 1, "Holgerson": 1, "Nussi": 1, "Puhbert": 1, "Rosenherz": 1, "Sputnik": 1, "Shogun": 1, "Wildchild": 1, "Tarzan": 1, "Knirpsi": 1, "Urmel": 1 } },
+      { text: "All of them. It's like the written word was invented for nothing.",sound: "musik/emoji.wav", points: { "Atomfried": 2, "Alemmania": 2, "Colonia": 1, "Christ": 1, "Doktor": 2, "Grammophon": 2, "Imperial Purity": 2, "Hummer": 1, "Jazz": 1, "Pi": 1, "Stone": 2, "Sturmhard": 1, "Thanatos": 1, "Whisky": 2 } }
+    ]
+  },
+      {
+    image: "karte/questionrich.png",
+        cursor: "cursor-money",
+    answers: [
+      { text: "Surprise, I am a jewelry designer now.",sound: "musik/kaching.mp3", points: { "Apple": 1, "Bluebell": 1, "Cinderella Melodie": 2, "Champagna": 1, "Don Armani Karlheinz": 2, "Fanta": 2, "Kirsche": 1, "Ohlove": 1, "Prestige": 1, "Rosenherz": 1, "Seniorina": 1, "Shaklyn": 2, "Siebenstern": 1, "Prinzessin": 1 } },
+      { text: "Yeah I don't know either where all this funding for these leftist groups is coming from that's crazy. ", sound: "musik/kaching.mp3", points: { "Berlin": 1, "Chaotica": 1, "Excalibur": 1, "Frodewin": 1, "Katzbachine": 1, "Lenin": 3, "Pepsi Carola": 1, "Regen": 1, "Schneewittchen": 1, "Superman": 1, "Sputnik": 1, "Vaginia": 2, "Woodstock": 2, "Vom Meer": 2} },
+      { text: "I really found all these designer clothes at TKMaxx belieeeve me!",sound: "musik/kaching.mp3", points: { "Blecherne": 1, "Chanel": 2, "Gucci": 2, "Junge": 1, "Leonardo da Vinci Franz": 2, "Milka": 1, "Puppe": 1, "Regenbogen": 1 } },
+      { text: "You would know. Everyone would know. Can't keep a secret to save my life.",sound: "musik/kaching.mp3", points: { "Axel Schweiß": 2, "Bierstübl": 2, "Bo": 1, "Dee-Jay": 1, "Herbstwind": 1, "Holgerson": 1, "Klee": 1, "Knirpsi": 1, "Matt Eagle": 1, "Nelkenheini": 2, "Puhbert": 1, "Pfefferminza": 2, "Störenfried": 1, "Sonnenschein": 1, "Shaggy": 1, "Wildchild": 2, "Tarzan": 1, "Schnucki": 2, "Urmel": 1 } },
+      { text: "That's true, there would be signs, but no sign of me, I'm outta here bitches, you'll never see me again.", sound: "musik/kaching.mp3",
+  secret: {
+      image: "karte/secretaway.png",
+    answers: [
+      { text: "I probably did a home renovations DIY that went bad", points: { "Blitz": 1, "McDonald": 1, "Verleihnix": 2 } },
+      { text: "I finally got that little cottage on a lonely island", points: { "Stone": 1, "Imperial Purity": 1 } },
+      { text: "I did some business with some baaad people", points: { "Bandito": 2, "Desperado": 1, "Pinocchio": 1, "Kain": 1, "Judas": 1 } },
+      { text: "That two year bike trip to China, something must've happened on the way", points: { "Colonia": 1, "Vagabund": 2, "Wildwest": 1 } },
+      { text: "Well, lets not lie to ourselves, it was the booze or the drugs", points: { "Desperado": 1, "Whisky": 2, "Rasputin": 2, "Scheißerle": 1, "Theiler": 1 } },
+      { text: "I finally joined the political revolution and went underground", points: { "Anakin Skywalker": 1, "Sturmhard": 1, "Winnetou": 1, "König": 1, "Großherzog": 1 } },
+      { text: "I am not the safest driver", points: { "Judas": 1, "Micki Lauda": 1, "Porsche": 1, "Ferrari": 1, "Theiler": 1 } }
+    ]
+  },
+       points: { "Anakin Skywalker": 1, "Blitz": 1, "Bandito": 2, "Colonia": 2, "Desperado": 1, "Ferrari": 2, "Großherzog": 1, "Imperial Purity": 1, "Judas": 2, "Kain": 1, "Micki Lauda": 1, "McDonald": 1, "Pinocchio": 2, "Porsche": 2, "Rasputin": 1, "Stone": 1, "Scheißerle": 2, "Sturmhard": 1, "Wildwest": 2, "Whisky": 1, "Vagabund": 2, "König": 1, "Theiler": 1, "Verleihnix": 1, "Winnetou": 1 } }
+    ]
+  },
+            {
+    image: "karte/questioncope.png",
+        cursor: "cursor-heart",
+    answers: [
+      { text: "Words of affirmation (directed to my friends, some call it complaining)",sound: "musik/morse1.mp3", points: { "Cinderella Melodie": 1, "Dee-Jay": 1, "Frodewin": 1, "Judas": 2, "Kain": 1, "Nelkenheini": 2, "Prestige": 1, "Rosenherz": 1, "Scheißerle": 1, "Seniorina": 2 } },
+      { text: "Acts of service (from a bar)",sound: "musik/morse2.mp3",
+secret: {
+      image: "karte/secretdrink.png",
+    answers: [
+      { text: "Beer", points: { "Bierstübl": 2, "Holgerson": 1, "Sexmus Ronny": 1, "Sturmhard": 1 } },
+      { text: "Rum Cola", points: { "McDonald": 1, "Shaklyn": 1, "Theiler": 1 } },
+      { text: "Hugo", points: { "Rosenherz": 1 } },
+      { text: "Whisky Sour", points: { "Berlin": 1 } },
+      { text: "Whisky (No Sour)", points: { "Smoky": 2, "Whisky": 3 } },
+      { text: "Champagne", points: { "Champagna": 2 } },
+      { text: "Wine", points: { "Christ": 1 } },
+      { text: "Desperado", points: { "Desperado": 2, "Wildwest": 1, "Shaklyn": 1 } },
+      { text: "Sake", points: { "Shogun": 2 } },
+      { text: "Absinth", points: { "Rasputin": 2 } }
+    ]
+  },
+       points: { "Berlin": 1, "Bierstübl": 3, "Champagna": 1, "Christ": 1, "Desperado": 2, "Holgerson": 1, "Jazz": 1, "McDonald": 2, "Regenbogen": 1, "Rasputin": 1, "Störenfried": 1, "Sturmhard": 1, "Wildwest": 2, "Whisky": 2, "Shaklyn": 1, "Sexmus Ronny": 2, "Theiler": 2 } },
+      { text: "Receiving gifts (from myself)", sound: "musik/morse3.mp3", points: { "Apple": 2, "Bandito": 1, "Blecherne": 2, "Chanel": 2, "Don Armani Karlheinz": 2, "Fanta": 1, "Gucci": 2, "Kirsche": 2, "Leonardo da Vinci Franz": 2, "Puppe": 1, "Vaginia": 1, "Milka": 1, "Prinzessin": 1, "Verleihnix": 1 } },
+      { text: "Quality time (away)", sound: "musik/morse4.mp3",
+secret: {
+      image: "karte/secretwhere.png",
+      specialMusic: true,
+    answers: [
+      { image: "Bild/meadow.gif", points: { "Herbstwind": 2, "Holgerson": 1, "Klee": 2, "Vagabund": 1, "Woodstock": 1, "Vom Meer": 1, "Winnetou": 2 } },
+      { image: "Bild/cottage.gif", points: { "Courage": 1, "Pfefferminza": 1, "Pepsi Carola": 1, "Schneewittchen": 2 } },
+      { image: "Bild/city.gif", points: { "Katzbachine": 1 } },
+      { image: "Bild/cave.gif", points: { "Batman": 1, "Junge": 1, "Stone": 1, "Siebenstern": 1, "Urmel": 1 } },
+      { image: "Bild/jungle.gif", points: { "Shaggy": 1, "Wildchild": 2, "Tarzan": 2 } },
+      { image: "Bild/cinema.gif", points: { "Grammophon": 2, "Smoky": 1, "Popcorn": 1 } },
+      { image: "Bild/lighthouse.gif", points: { "Atomfried": 2, "Blitz": 1, "Pi": 1, "Regen": 2, "Stone": 1 } },
+      { image: "Bild/resort.gif", points: { "Ferrari": 1, "Matt Eagle": 1, "Micki Lauda": 1, "Vom Meer": 2 } }
+    ]
+  },
+       points: { "Atomfried": 2, "Blitz": 2, "Batman": 1, "Courage": 1, "Ferrari": 2, "Grammophon": 1, "Herbstwind": 1, "Holgerson": 2, "Junge": 1, "Klee": 1, "Matt Eagle": 1, "Pi": 1, "Pfefferminza": 1, "Pepsi Carola": 1, "Regen": 1, "Stone": 1, "Schneewittchen": 1, "Smoky": 2, "Shaggy": 2, "Katzbachine": 1, "Wildchild": 2, "Tarzan": 1, "Vagabund": 2, "Siebenstern": 1, "Urmel": 1, "Popcorn": 1, "Woodstock": 1, "Micki Lauda": 1, "Vom Meer": 1, "Winnetou": 2 } },
+      { text: "Physical touch - just kidding: denial",sound: "musik/morse5.mp3", points: { "Anakin Skywalker": 1, "Axel Schweiß": 1, "Colonia": 1, "Crazy Horse": 1, "Doktor": 1, "Eisenstein": 1, "Hummer": 2, "König": 1, "Nussi": 1, "Pinocchio": 1, "Puhbert": 1, "Superman": 1, "Sonnenschein": 1, "Thanatos": 1 } }
+    ]
+  },
+                {
+    image: "karte/questionanimal.png",
+        cursor: "cursor-animal",
+    answers: [
+      { image: "bild/horses.jpg", sound: "musik/horse.mp3",
+secret: {
+      image: "karte/secrethorse.png",
+    answers: [
+      { image: "Bild/pferd_lipizzaner.png", points: { "Apple": 1, "Cinderella Melodie": 1, "Prestige": 2, "Superman": 1, "Prinzessin": 1 } },
+      { image: "Bild/pferd_pippi.jpg", points: { "Ohlove": 1, "Pepsi Carola": 1, "Pfefferminza": 2 } },
+      { image: "Bild/pferd_friese.jpg", points: { "Excalibur": 2, "Kirsche": 1, "Prestige": 1, "Schneewittchen": 1 } },
+      { image: "Bild/pferd_haflinger.jpg", points: { "Klee": 1, "Pepsi Carola": 1, "Schnucki": 2 } },
+      { image: "Bild/pferd_rot.jpg", points: { "Crazy Horse": 2 } },
+      { image: "Bild/pferd_kuh.jpg", points: { "Milka": 2, "McDonald": 1 } },
+      { image: "Bild/pferd_mustang.jpg", points: { "Wildwest": 2, "Winnetou": 2 } },
+      { image: "Bild/pferd_araber.jpeg", points: { "Don Armani Karlheinz": 2, "Shaklyn": 1 } }
+    ]
+  },
+       points: { "Apple": 1, "Crazy Horse": 2, "Cinderella Melodie": 1, "Don Armani Karlheinz": 1, "Excalibur": 1, "Klee": 2, "Kirsche": 1, "Milka": 1, "Ohlove": 1, "Pepsi Carola": 1, "Pfefferminza": 1, "Prestige": 1, "Schneewittchen": 1, "Wildwest": 1, "Shaklyn": 1, "Superman": 1, "Schnucki": 2, "McDonald": 1, "Prinzessin": 2, "Winnetou": 2 } },
+      { image: "bild/lobster.jpg", sound: "musik/lobster.mp3", points: { "Blecherne": 1, "Colonia": 1, "Champagna": 1, "Hummer": 2, "Stone": 2, "Vom Meer": 1 } },
+      { image: "bild/wolf.webp", sound: "musik/wolf.mp3", points: { "Christ": 1, "Eisenstein": 2, "Großherzog": 1, "Imperial Purity": 2, "Kain": 2, "Matt Eagle": 1, "Pepsi Carola": 1, "Pfefferminza": 1, "Prestige": 1, "Sturmhard": 1, "Sputnik": 1, "Shaggy": 2 } },
+      { image: "bild/cat.jpg", sound: "musik/cat.mp3", points: { "Berlin": 1, "Courage": 1, "Katzbachine": 2, "Pi": 1, "Rosenherz": 1, "Seniorina": 1, "Vaginia": 2, "Siebenstern": 2, "Verleihnix": 1 } },
+      { image: "bild/dolphin.jpg", sound: "musik/dolphin.mp3", points: { "Dee-Jay": 1, "Nemo": 1, "Ohlove": 1, "Pepsi Carola": 1, "Popcorn": 1, "Regenbogen": 2, "Sonnenschein": 2, "Wildchild": 1, "Sexmus Ronny": 2, "Vom Meer": 2 } },
+      { image: "bild/eagle.jpg", sound: "musik/eagle.mp3", points: { "Anakin Skywalker": 1, "Alemmania": 2, "Holgerson": 2, "König": 2, "Leonardo da Vinci Franz": 1, "Matt Eagle": 2, "Pfefferminza": 1, "Whisky": 2 } },
+      { image: "bild/snake.jpg", sound: "musik/snake.mp3",  points: { "Judas": 2, "Lucifer": 2, "Rasputin": 2, "Vaginia": 1, "Urmel": 1, "Theiler": 1 } },
+      { image: "bild/butterfly.jpg", sound: "musik/butterfly.mp3", points: { "Bluebell": 2, "Herbstwind": 1, "Puhbert": 1, "Puppe": 1 } },
+      { image: "bild/seastar.jpg", sound: "musik/seastar.mp3", points: { "Atomfried": 1, "Fanta": 2, "Nemo": 2, "Nussi": 1, "Vom Meer": 1 } },
+      { image: "bild/kangaroo.webp", sound: "musik/kangaroo.mp3", points: { "Chaotica": 2, "König": 1, "Bierstübl": 1 } },
+      { image: "bild/anteater.jpg", sound: "musik/anteater.mp3", points: { "Frodewin": 1 } },
+      { image: "bild/bat.jpg",  sound: "musik/bat.mp3",
+
+secret: {
+      image: "karte/secretvamp.png",
+    answers: [
+      { image: "bild/nosferatu.jpeg", points: { "Satan": 2 } },
+      { image: "bild/Edward.jpg", points: { "Regen": 2, "Shaklyn": 1 } },
+      { image: "bild/Lestat.jpg", points: { "Pain": 2 } },
+      { image: "bild/nicolas.jpg", points: { "Scheißerle": 1 } },
+      { image: "bild/count.png", points: { "Pi": 1 } },
+      { image: "bild/Blade.jpg", points: { "Thanatos": 1, "Batman": 2, "Smoky": 1 } }
+    ]
+  },
+        points: { "Batman": 2, "Pain": 1, "Regen": 1, "Satan": 2, "Smoky": 1, "Thanatos": 2 } },
+      { image: "bild/squid.jpg",  sound: "musik/squid.mp3",points: { "Nemo": 1, "Smoky": 1, "Vom Meer": 1 } },
+      { image: "bild/cheetah.jpg", sound: "musik/cheetah.mp3",points: { "Blitz": 2, "Bandito": 1, "Bo": 1, "Chanel": 1, "Desperado": 1, "Ferrari": 2, "Gucci": 2, "Junge": 1, "Micki Lauda": 2, "Pinocchio": 1, "Porsche": 2, "Superman": 1, "Tarzan": 1, "Knirpsi": 1 } }
+    ]
+  },
+
+
+    {
+    image: "karte/questioninternet.png",
+        cursor: "cursor-world",
+    answers: [
+      { text: "Creating personality quizzes",sound: "musik/windows5.mp3", points: { "Cinderella Melodie": 1, "Champagna": 1, "Frodewin": 1, "Kirsche": 1, "Ohlove": 2, "Peanut": 1, "Regenbogen": 1, "Schneewittchen": 1, "Sonnenschein": 1, "Shaklyn": 1, "Rosenherz": 1, "Siebenstern": 1 } },
+      { text: "Being a mod on 4chan",sound: "musik/windows2.mp3", points: { "Anakin Skywalker": 2, "Alemmania": 1, "Großherzog": 2, "Imperial Purity": 1, "Judas": 1, "Kain": 1, "Matt Eagle": 1, "Sturmhard": 1 } },
+      { text: "Writing Wikipedia articles", sound: "musik/windows3.mp3",
+secret: {
+      image: "karte/secretwrite.png",
+    answers: [
+      { text: "The number Pi", points: { "Pi": 2 } },
+      { text: "Science", points: { "Doktor": 2 } },
+      { text: "Literature", points: { "Doktor": 1 } },
+      { text: "War History", points: { "Eisenstein": 2, "Grammophon": 1, "Sturmhard": 2, "Shogun": 2 } },
+      { text: "Flora and Fauna", points: { "Nelkenheini": 2, "Holgerson": 1, "Siebenstern": 1, "Vom Meer": 2 } },
+      { text: "Try to subtly change the articles based on my political agenda", points: { "Hummer": 1 } }
+    ]
+  },
+       points: { "Atomfried": 1, "Colonia": 1, "Doktor": 3, "Eisenstein": 1, "Grammophon": 1, "Hummer": 1, "Holgerson": 1, "Nelkenheini": 1, "Pi": 2, "Stone": 2, "Shogun": 1, "Vom Meer": 1 } },
+      { text: "Joining Anonymous", sound: "musik/windows6.mp3", points: { "Batman": 1, "Berlin": 1, "Courage": 2, "Lenin": 2, "Pain": 1, "Regen": 1, "Superman": 1, "Thanatos": 2, "Wildwest": 1, "Winnetou": 1 } },
+      { text: "Ragebaiting ppl on r/amitheasshole", sound: "musik/windows1.mp3", points: { "Axel Schweiß": 2, "Chaotica": 1, "Desperado": 1, "Junge": 1, "Nussi": 1, "Puhbert": 1, "Pinocchio": 1, "Popcorn": 2, "Rasputin": 2, "Scheißerle": 2, "Störenfried": 2, "Satan": 1, "Sexmus Ronny": 1, "Knirpsi": 1, "Urmel": 2, "Theiler": 2 } },
+      { text: "Making 2 hour long videos about the lore of Sims 2",sound: "musik/windows7.mp3", points: { "Bo": 1, "Crazy Horse": 2, "Katzbachine": 1, "Nemo": 1, "Pepsi Carola": 1, "Puppe": 1, "Satan": 1, "Vaginia": 1 } },
+      { text: "Submitting lore for creepypastas like the backrooms wiki or be part of the SCP foundation",sound: "musik/windows4.mp3", points: { "Excalibur": 2, "Fanta": 1, "Jazz": 1, "Smoky": 1, "Sputnik": 2 } }
+    ]
+  },
+
+
+
+  {
+    image: "karte/satc.png",
+        cursor: "cursor-drink",
+    answers: [
+      { image: "bild/samantha.webp", sound: "musik/miranda1.mp3",
+       points: { "Bandito": 1, "Champagna": 2, "Don Armani Karlheinz": 1, "Ferrari": 1, "Gucci": 2, "Katzbachine": 1, "Leonardo da Vinci Franz": 1, "Micki Lauda": 2, "Pfefferminza": 1, "Porsche": 2, "Satan": 1, "Smoky": 1, "Vaginia": 2, "Shaklyn": 1, "Sexmus Ronny": 2 } },
+      { image: "bild/miranda.webp",sound: "musik/miranda2.mp3",
+       points: { "Atomfried": 1, "Batman": 1, "Courage": 1, "Eisenstein": 1, "Hummer": 1, "Junge": 1, "McDonald": 1, "Pain": 2, "Regen": 1, "Sputnik": 1, "Verleihnix": 1 } },
+      { image: "bild/carrie.jpg",sound: "musik/miranda3.mp3",
+        points: { "Blitz": 1, "Cinderella Melodie": 1, "Crazy Horse": 1, "Chaotica": 2, "Desperado": 1, "Herbstwind": 1, "Klee": 1, "Nussi": 1, "Ohlove": 2, "Pepsi Carola": 1, "Pfefferminza": 1, "Popcorn": 1, "Regenbogen": 1, "Störenfried": 1, "Shaggy": 1, "Wildchild": 2, "Vagabund": 1, "Siebenstern": 1 } },
+      { image: "bild/charlotte.jpg",sound: "musik/miranda4.mp3",
+       points: { "Apple": 2, "Bluebell": 1, "Chanel": 1, "Kirsche": 1, "Milka": 2, "Puhbert": 1, "Peanut": 1, "Puppe": 2, "Rosenherz": 2, "Schneewittchen": 2, "Schnucki": 2, "Prinzessin": 1 } }
+    ]
+  },
+
+
+    {
+    image: "karte/questionesoteric.png",
+    cursor: "cursor-ufo",
+    answers: [
+      { text: "Tarot and Witches", sound: "musik/sailor3.mp3",points: { "Bandito": 1, "Champagna": 1, "Excalibur": 2, "Katzbachine": 1, "Pfefferminza": 1, "Schneewittchen": 1, "Satan": 2, "Smoky": 1, "Vaginia": 1, "Thanatos": 1, "Sexmus Ronny": 1 } },
+      { text: "Astrology and Crystals",sound: "musik/sailor3.mp3", secret: {
+      image: "karte/secretcrystal.png",
+    answers: [
+      { image: "bild/clearquartz.jpg", points: { "Apple": 2 } },
+      { image: "bild/rosequartz.jpg", points: { "Cinderella Melodie": 2, "Puppe": 1, "Shaklyn": 1 } },
+      { image: "bild/aquamarine.jpg", points: { "Bluebell": 2 } },
+      { image: "bild/labradorite.jpg", points: { "Pfefferminza": 1, "Regenbogen": 1 } },
+      { image: "bild/moonstone.webp", points: { "Siebenstern": 1 } },
+      { image: "bild/blackobsidian.jpg", points: { "Schneewittchen": 1, "Satan": 1 } },
+      { image: "bild/malachite.jpg", points: { "Test": 1 } },
+      { image: "bild/amethyst.jpg", points: { "Smoky": 1 } }
+    ]
+  },sound: "musik/sailor3.mp3", points: { "Apple": 1, "Bluebell": 1, "Cinderella Melodie": 1, "Ohlove": 1, "Pfefferminza": 1, "Puppe": 1, "Regenbogen": 1, "Schneewittchen": 1, "Shaklyn": 1, "Siebenstern": 2 } },
+      { text: "...how transcendental meditation allows students to dive in and experience the unbounded ocean of consciousness within each of us, the big treasury, the field within each of us that is the base of all matter and all mind.",sound: "musik/sailor3.mp3", points: { "Crazy Horse": 1, "Frodewin": 1, "Nussi": 1, "Ohlove": 1, "Shaggy": 1, "Wildchild": 1, "Vagabund": 1, "Winnetou": 1 } },
+      { text: "The Tooth Fairy (no endorsment)",sound: "musik/sailor3.mp3", points: { "Bo": 2, "Junge": 1, "Knirpsi": 1, "Puhbert": 1, "Scheißerle": 2, "Urmel": 1 } },
+      { text: "...how in the 21st century the antichrist is a luddite who wants to stop all science.",sound: "musik/sailor3.mp3", points: { "Anakin Skywalker": 1, "Christ": 1, "Großherzog": 1, "Imperial Purity": 1, "Judas": 2, "Kain": 1, "Lucifer": 1, "Sturmhard": 2, "Störenfried": 1 } },
+      { text: "Homeopathic medecine, they'll gonna find out how it works someday!",sound: "musik/sailor3.mp3", points: { "Fanta": 1, "Gucci": 1, "Holgerson": 1, "Herbstwind": 1, "Kirsche": 1, "Klee": 2, "Ohlove": 1, "Pepsi Carola": 1, "Pfefferminza": 1, "Rasputin": 1, "Sonnenschein": 1, "Seniorina": 1, "Shogun": 2, "Woodstock": 1, "Winnetou": 1 } },
+      { text: "...the free market system distributing the fruits of economic progress among all people.",sound: "musik/sailor3.mp3", points: { "Blecherne": 1, "Chanel": 1, "Colonia": 2, "Don Armani Karlheinz": 2, "Ferrari": 2, "König": 1, "Leonardo da Vinci Franz": 2, "Pinocchio": 2, "Porsche": 2, "Micki Lauda": 1, "Matt Eagle": 1, "Prestige": 1, "Wildwest": 1, "Whisky": 1, "Desperado": 1, "Theiler": 1, "McDonald": 1, "Prinzessin": 1, "Verleihnix": 2 } },
+      { text: "The transformative healing power of music",sound: "musik/sailor3.mp3", points: { "Berlin": 1, "Bierstübl": 1, "Dee-Jay": 1, "Eisenstein": 1, "Grammophon": 2, "Jazz": 2, "Peanut": 1, "Regen": 1, "Rosenherz": 1, "Wildchild": 1, "Tarzan": 1, "Woodstock": 2 } },
+      { text: "Next Question",sound: "musik/sailor3.mp3", points: { "Atomfried": 1, "Courage": 1, "Doktor": 2, "Lenin": 2, "Nelkenheini": 1, "Pain": 2, "Pi": 2, "Stone": 2, "Superman": 1, "Sputnik": 1, "Vom Meer": 1 } }
+    ]
+  },
+
+
+
+                {
+    image: "karte/questioncall.png",
+        cursor: "cursor-phone",
+    answers: [
+      { text: "Ghostbusters!",sound: "musik/beep1.mp3", points: { "Dee-Jay": 1, "Fanta": 1, "Junge": 1, "Knirpsi": 2, "Pepsi Carola": 1, "Popcorn": 2, "Shaggy": 2, "Excalibur": 1, "Tarzan": 1, "Theiler": 1 } },
+      { text: "Your Manager",sound: "musik/beep2.mp3", points: { "Apple": 1, "Blecherne": 1, "Chanel": 1, "Porsche": 1, "Prestige": 1, "Störenfried": 1 } },
+      { text: "The police",sound: "musik/beep3.mp3", points: { "Axel Schweiß": 1, "Alemmania": 2, "Courage": 1, "Colonia": 1, "Christ": 1, "Eisenstein": 1, "Imperial Purity": 1, "Matt Eagle": 2, "Sturmhard": 2, "Shaklyn": 1, "Verleihnix": 1 } },
+      { text: "My lawyer",sound: "musik/beep4.mp3", points: { "Atomfried": 1, "Don Armani Karlheinz": 1, "Großherzog": 1, "McDonald": 1, "Pinocchio": 1, "Verleihnix": 1 } },
+      { text: "A doctor, we need a doctor!",sound: "musik/beep5.mp3", points: { "Nelkenheini": 1, "Rasputin": 1 } },
+      { text: "Mom",sound: "musik/beep6.mp3", points: { "Batman": 1, "Bandito": 1, "Bo": 2, "Frodewin": 1, "Knirpsi": 1, "Nemo": 1, "Milka": 1, "Puhbert": 1, "Scheißerle": 1, "Seniorina": 2, "Schnucki": 2 } },     
+      { text: "All that's calling to me is the wind, the sun and the rain",sound: "musik/beep7.mp3", points: { "Blitz": 1, "Bluebell": 1, "Herbstwind": 2, "Klee": 1, "Nelkenheini": 1, "Ohlove": 1, "Pfefferminza": 1, "Regenbogen": 2, "Schneewittchen": 1, "Sonnenschein": 1, "Wildchild": 1, "Wildwest": 1, "Vagabund": 2, "Siebenstern": 1, "Vom Meer": 1, "Winnetou": 2 } },
+      { text: "My therapist",sound: "musik/beep8.mp3", points: { "Berlin": 1, "Desperado": 1, "Nussi": 1, "Pain": 2, "Peanut": 1, "Puppe": 2, "Vaginia": 1, "Thanatos": 1, "Sexmus Ronny": 1 } },
+      { text: "I call no one and no one calls me",sound: "musik/beep9.mp3", points: { "Hummer": 1, "Pi": 1, "Stone": 1, "Urmel": 1 } },       
+      { text: "The year 1971",sound: "musik/beep10.mp3", points: { "Bierstübl": 1, "Grammophon": 3, "Holgerson": 1, "Jazz": 1, "Kirsche": 1, "Leonardo da Vinci Franz": 1, "McDonald": 1, "Regen": 1, "Rosenherz": 1, "Stone": 1, "Sputnik": 2, "Whisky": 1, "Woodstock": 2 } }
+    ]
+  },
+
+
+        {
+    image: "karte/questionslogan.png",
+        cursor: "cursor-sun",
+    answers: [
+      { text: "Die, Cry, Lie?",sound: "musik/sailor1.mp3", points: { "Berlin": 1, "Bandito": 1, "Desperado": 1, "Excalibur": 2, "Judas": 2, "Pain": 2, "Pinocchio": 2, "Thanatos": 1 } },
+      { text: "Sex, Vex, Hex?",sound: "musik/sailor1.mp3", points: { "Champagna": 2, "Katzbachine": 2, "Kirsche": 1, "Lucifer": 1, "Puppe": 1, "Rasputin": 2, "Satan": 1, "Smoky": 2, "Seniorina": 1, "Vaginia": 2, "Sexmus Ronny": 2, "Siebenstern": 1, "Woodstock": 1 } },
+      { text: "Gaslight, Gatekeep, Girlboss?",sound: "musik/sailor1.mp3", points: { "Apple": 2, "Blecherne": 1, "Chanel": 1, "Gucci": 2, "Porsche": 1, "Prestige": 1, "Regenbogen": 1, "Rosenherz": 1, "Wildchild": 1, "Shaklyn": 1, "Verleihnix": 1 } },
+      { text: "Mansplain, Manipulate, Manslaughter?",sound: "musik/sailor1.mp3", points: { "Anakin Skywalker": 2, "Axel Schweiß": 1, "Alemmania": 1, "Don Armani Karlheinz": 1, "Großherzog": 1, "Imperial Purity": 2, "Junge": 1, "König": 1, "Kain": 2, "Leonardo da Vinci Franz": 1, "Lucifer": 1, "Porsche": 1, "Störenfried": 1, "Sturmhard": 1, "Shogun": 2, "Lenin": 1, "Wildwest": 1, "Whisky": 1, "Theiler": 1 } },
+      { text: "Love, Laugh, Toaster Bath?",sound: "musik/sailor1.mp3", points: { "Dee-Jay": 1, "Nussi": 1, "Regen": 1, "Scheißerle": 1 } },
+      { text: "Isolate, Ignore, Ibuprofen?",sound: "musik/sailor1.mp3", points: { "Batman": 1, "Bierstübl": 1, "Doktor": 2, "Eisenstein": 1, "Hummer": 2, "McDonald": 1, "Pain": 2, "Stone": 1, "Thanatos": 1 } },
+      { text: "Reduce, Reuse, Recycle?",sound: "musik/sailor1.mp3", points: { "Bluebell": 1, "Courage": 2, "Frodewin": 1, "Klee": 1, "Nelkenheini": 2, "Ohlove": 1, "Pepsi Carola": 1, "Sonnenschein": 1, "Herbstwind": 2, "Vom Meer": 2 } },
+      { text: "See it, Say it, Sort it?",sound: "musik/sailor1.mp3", points: { "Bo": 1, "Christ": 2, "Holgerson": 1, "Matt Eagle": 2, "Milka": 1, "Nemo": 1, "Puhbert": 1, "Peanut": 1, "Pi": 1, "Superman": 1, "Schnucki": 1, "Grammphon": 1 } },
+      { text: "Zip Zap Zoom?",sound: "musik/sailor1.mp3", points: { "Blitz": 2, "Crazy Horse": 2, "Chaotica": 2, "Ferrari": 1, "Fanta": 1, "Jazz": 2, "Knirpsi": 1, "Micki Lauda": 1, "Pfefferminza": 1, "Popcorn": 1, "Superman": 1, "Shaggy": 1, "Tarzan": 1, "Urmel": 2 } }
+    ]
+  },
+
+          {
+  image: "karte/questionsims.png",
+        cursor: "cursor-sim",
+    answers: [
+      { text: "Letting my Sims die in different ways and collecting tombstones! Did you know the ghosts can have different colors?", sound: "musik/simsdeath2.mp3", points: { "Blitz": 1, "Berlin": 1, "Christ": 1, "Excalibur": 1, "Eisenstein": 1, "Lucifer": 2, "Regen": 1, "Satan": 2, "Thanatos": 2 } },
+      { text: "Throwing a houseparty and remove all the doors for the Sims who don't enjoy it, guess what you'll better like my party because you'll never leave it.",sound: "musik/simsparty.mp3", points: { "Crazy Horse": 2, "Desperado": 1, "Judas": 1, "Kain": 1, "Nussi": 1, "Rasputin": 1, "Scheißerle": 1 } },
+      { text: "Making out with the entire population of Pleasantville.", sound: "musik/simslove.mp3",points: { "Bluebell": 1, "Champagna": 1, "Chaotica": 2, "Herbstwind": 1, "Katzbachine": 1, "Puppe": 1, "Popcorn": 1, "Störenfried": 1, "Smoky": 2, "Seniorina": 2, "Vaginia": 2, "Sexmus Ronny": 2, "Woodstock": 1 } },
+      { text: "Spending hours on character creation, building the most stunning houses, download all the mods, never actually play with the Sims.",sound: "musik/simscreation.mp3", points: { "Atomfried": 1, "Blecherne": 1, "Doktor": 2, "Ferrari": 1, "Fanta": 1, "Leonardo da Vinci Franz": 2, "Nelkenheini": 1, "Pepsi Carola": 1, "Schneewittchen": 1 } },
+      { text: "Cheat myself to loads of money and a never ending life and live the life of the rich and famous.",sound: "musik/simscheat.mp3", points: { "Bandito": 2, "Chanel": 2, "Don Armani Karlheinz": 2, "Gucci": 1, "Junge": 1, "Porsche": 1, "Pinocchio": 1, "Regenbogen": 1, "Theiler": 1 } },
+      { text: "Build a tiny home, struggle to find & keep a job and stay social, you know how it's supposed to be played.",sound: "musik/simssuppose.mp3", points: { "Axel Schweiß": 2, "Dee-Jay": 1, "Frodewin": 1, "Lenin": 1, "Matt Eagle": 1, "Puhbert": 1, "Schnucki": 1, "Nemo": 1 } },
+      { text: "I recreate my life, my home, myself, my crush...",sound: "musik/simsrecreate.mp3", points: { "Apple": 1, "Bo": 1, "Knirpsi": 1, "Milka": 1, "Peanut": 2, "Rosenherz": 1, "Desperado": 1 } },
+      { text: "Create a dynasty to rule all over Pleasantville, step aside Goths.",sound: "musik/simsdynasty.mp3", points: { "Anakin Skywalker": 1, "Alemmania": 1, "Colonia": 2, "Großherzog": 1, "Imperial Purity": 1, "König": 2, "Prestige": 1, "Prinzessin": 1, "Verleihnix": 1 } },
+      { text: "I've never played the Sims",sound: "musik/simsnever.mp3", 
+secret: {
+  image: "karte/secretplayed.png",
+    answers: [
+      { text: "Kings Quest III - To Heir is Human", points: { "Grammophon": 2 } },
+      { text: "Beerpong", points: { "Bierstübl": 2, "Tarzan": 1, "Woodstock": 1 } },
+      { text: "Mario Cart", points: { "Micki Lauda": 1 } },
+      { text: "Chess", points: { "Pi": 1, "Stone": 1, "Sputnik": 1 } },
+      { text: "Spin the bottle", points: { "Kirsche": 1, "Shaklyn": 2 } },
+      { text: "Batman: Arkham Knight", points: { "Batman": 1 } },
+      { text: "I make up my own games", points: { "Pfefferminza": 2, "Klee": 1, "Wildchild": 1, "Vagabund": 2, "Urmel": 1, "Vom Meer": 1, "Winnetou": 1 } }
+    ]
+  },
+        points: { "Batman": 1, "Bierstübl": 1, "Grammophon": 1, "Holgerson": 1, "Klee": 1, "Kirsche": 1, "Micki Lauda": 1, "McDonald": 1, "Pfefferminza": 1, "Pi": 1, "Stone": 1, "Sputnik": 1, "Wildchild": 1, "Tarzan": 1, "Shaklyn": 1, "Vagabund": 1, "Urmel": 1, "Woodstock": 1, "Vom Meer": 1, "Winnetou": 1 } }
+    ]
+  },
+
+
+    {
+   image: "Karte/questionwrestling.png",
+        cursor: "cursor-arm",
+    answers: [
+      { text: "Golden Era", sound: "musik/goldenera.mp3", points: { "Bierstübl": 1, "Bluebell": 1, "Don Armani Karlheinz": 1, "Fanta": 1, "Grammophon": 1, "Holgerson": 1, "Jazz": 1, "Kirsche": 1, "Micki Lauda": 1, "Pfefferminza": 1, "Pi": 2, "Superman": 2, "Sputnik": 1, "Shogun": 2, "Wildwest": 1, "Tarzan": 1, "Prinzessin": 1 } },
+      { text: "New Generation Era", sound: "musik/newgenerationera.mp3", points: { "Regenbogen": 1, "Scheißerle": 1, "Woodstock": 1 } },
+      { text: "Ruthless Aggression Era", sound: "musik/ruthlessaggressionera.mp3", points: { "Anakin Skywalker": 1, "Axel Schweiß": 1, "Blitz": 1, "Batman": 1, "Crazy Horse": 1, "Eisenstein": 1, "Hummer": 1, "Katzbachine": 2, "Kain": 2, "Micki Lauda": 1, "Nussi": 1, "Pinocchio": 1, "Porsche": 1, "Stone": 1, "Störenfried": 1, "Sturmhard": 2, "Theiler": 2 } },
+      { text: "PG Era",sound: "musik/pgera.mp3", points: { "Bo": 2, "Frodewin": 2, "Junge": 1, "Knirpsi": 1, "Puhbert": 1, "Peanut": 2, "Schnucki": 1, "McDonald": 1 } },
+      { text: "Reality Era", sound: "musik/realityera.mp3",points: { "Atomfried": 1, "Apple": 1, "Courage": 1, "Dee-Jay": 1, "Doktor": 1, "Ferrari": 1, "Lenin": 1, "Matt Eagle": 1, "Milka": 1, "Ohlove": 1, "Popcorn": 1 } },
+      { text: "Attitude Era",sound: "musik/attitudeera.mp3", points: { "Berlin": 1, "Bandito": 1, "Champagna": 1, "Desperado": 1, "Gucci": 1, "Judas": 1, "Lucifer": 1, "Rasputin": 2, "Smoky": 2, "Seniorina": 2, "Shaklyn": 1 } },
+      { text: "Renaissance Era",sound: "musik/renaissanceera.mp3",
+secret: {
+  image: "karte/secretrenaissance.png",
+    answers: [
+      { text: "19th century", points: { "Blecherne": 1, "Colonia": 1, "Großherzog": 1 } },
+      { text: "The year of our Lord", points: { "Christ": 2 } },
+      { text: "30s", points: { "Alemmania": 2, "Imperial Purity": 1 } },
+      { text: "20s", points: { "Chanel": 1, "Prestige": 1 } },
+      { text: "The Renaissance", points: { "Leonardo da Vince Franz": 2 } },
+      { text: "Medieval Period", points: { "Excalibur": 2, "König": 1, "Schneewittchen": 1 } },
+      { text: "60s", points: { "Pepsi Carola": 1, "Puppe": 1 } },
+      { text: "Ancient Greece", points: { "Thanatos": 1 } },
+      { text: "Triassic Period", points: { "Urmel": 2 } }
+    ]
+  },
+       points: { "Alemmania": 1, "Blecherne": 1, "Christ": 2, "Chanel": 1, "Colonia": 1, "Excalibur": 1, "Großherzog": 1, "Imperial Purity": 1, "König": 2, "Leonardo da Vinci Franz": 2, "Pepsi Carola": 1, "Puppe": 1, "Prestige": 2, "Thanatos": 1, "Schneewittchen": 1, "Urmel": 2 } }
+    ]
+  },
+
+
+
+    {
+    image: "karte/questionhorse.png",
+    layout: "two-col",
+        cursor: "cursor-horse",
+    answers: [
+      { text: "*+:｡.｡-𝘉ไίť𝘻-｡.｡:+*", sound: "musik/blitz.mp3", points: { "Blitz": 2, "Ferrari": 1, "Knirpsi": 1, "Micki Lauda": 1, "Porsche": 1, "Superman": 1 } },
+      { text: "°🫧•𖨆٭ 𝒃ü𝒕𝒕ᶓ𝘳𝒃ʅü𐌼ᶓ꙳○𖨆°", sound: "musik/butterblume.mp3", points: { "Klee": 2, "Peanut": 1, "Winnetou": 1 } },
+      { text: "𒆜Ꮯ𝒾Ŋᖙ𝐲𒆜", sound: "musik/cindy.mp3", points: { "Gucci": 1, "Nussi": 1, "Shaklyn": 1 } },
+      { text: "━ ᑕᥣе𝕠ῥⲁԵ𝚛ⲁ :･ﾟ✧", sound: "musik/cleopatra.mp3", points: { "Chanel": 2, "Champagna": 1, "Katzbachine": 2, "Leonardo da Vinci Franz": 1, "Smoky": 1 } },
+      { text: "𝔻༏ãᶬ𝘢กԵ*॰¨̮ ♡➳♡¯ツ", sound: "musik/diamant.mp3", points: { "Blecherne": 1, "Hummer": 1, "Pi": 1, "Don Armani Karlheinz": 1 } },
+      { text: "★⁂⁙ꜰ𝕖ũ𝕖ṛвส𝚕ʆ⁙⁂★", sound: "musik/feuerball.mp3", points: { "Anakin Skywalker": 1, "Blitz": 1, "Ferrari": 1, "Lucifer": 1, "Popcorn": 1 } },
+      { text: "꧁⪻♥Ᏻ𝐢ѕ૯l𝒶♥⪼꧂", sound: "musik/gisela.mp3", points: { "Pfefferminza": 1 } },
+      { text: "♥☁๕𝕣ä𝔣ῖŊ☁♥", sound: "musik/gräfin.mp3", points: { "Colonia": 2, "Großherzog": 2, "Rosenherz": 1 } },
+      { text: "♡《𝚂𝓊𝙜𝓪𝙧》♡",sound: "musik/sugar.mp3",points: { "Bierstübl": 1, "Fanta": 1, "Milka": 2, "McDonald": 2 } },
+      { text: "°”𝐉ศᎦꪑϊ𝐧”°", sound: "musik/jasmin.mp3", points: { "Pepsi Carola": 1 } },
+      { text: "+｡:.ﾟᛖⲁĝīc\ (•◡•) /", sound: "musik/magic.mp3", points: { "Dee-Jay": 2, "Excalibur": 1, "Jazz": 2, "Nelkenheini": 1 } },
+      { text: "♥. * ･ ｡ﾟҎ𝔯ì𝓶ᤂ𝚟ę𝔯@. * ･ ｡ﾟ♥",sound: "musik/primavera.mp3", points: { "Prestige": 1 } },
+      { text: "꧁⪻♥𝑪𝕙ᵃṁ𝓹¡𝑜п♥⪼꧂", sound: "musik/champion.mp3", points: { "Alemmania": 1, "Imperial Purity": 1 } },
+      { text: "✿ ¦ ᴘʳïп𝘇𝖊𝔰𝔰ίп ¦",sound: "musik/prinzessin.mp3", points: { "Colonia": 1, "Frodewin": 1, "König": 1, "Puppe": 2, "Schneewittchen": 2, "Seniorina": 1, "Don Armani Karlheinz": 1, "Prinzessin": 2 } },
+      { text: "༱𝕠cкꪗ",sound: "musik/rocky.mp3", 
+
+secret: {
+  image: "karte/secretstone.png",
+    answers: [
+      { text: "My heart is made of stone and so is my horsies", points: { "Atommfried": 2, "Eistenstein": 1, "Stone": 1 } },
+      { text: "I love Rock n' Roll", points: { "Bandito": 1 } },
+      { text: "I like rocks", points: { "Junge": 2, "Puhbert": 1, "Scheißerle": 1 } },
+      { text: "I am a man, my horse is a man", points: { "Tarzan": 1, "Sexmus Ronny": 1, "Theiler": 2 } },
+      { text: "Sounds cute and I am cute and my horse is cute", points: { "Puhbert": 1, "Sputnik": 1 } }
+    ]
+  },
+        points: { "Atomfried": 2, "Bandito": 1, "Eisenstein": 1, "Junge": 1, "Puhbert": 1, "Scheißerle": 1, "Stone": 1, "Sputnik": 1, "Tarzan": 1, "Sexmus Ronny": 1, "Theiler": 1 } },
+      { text: "☆*:.｡.𝐒𝕒ѕѕ𝘆.｡.:*☆",sound: "musik/sassy.mp3",  points: { "Pinocchio": 1, "Smoky": 1, "Shaklyn": 1 } },
+      { text: "✰ＳcᏥ𝗻ԑԑԲ𝗅ℴcᶄᵋ✰", sound: "musik/schneeflocke.mp3", points: { "Berlin": 1, "Bluebell": 2, "Kirsche": 2, "Schnucki": 1 } },
+      { text: "♦⪼᥉ĩȴɞ૯ṛ𝕡ᠻ૯ĩȴ⪻♦", sound: "musik/silberpfeil.mp3",points: { "Wildwest": 1 } },
+      { text: "✿┋ڳ𝗼ꪔ₥𝔢ṛ𝖜ĩƞ𝒹⠀ᥫ᭡፝֟፝֟", sound: "musik/sommerwind.mp3", points: { "Cinderella Melodie": 2, "Herbstwind": 1, "Ohlove": 1, "Regen": 1, "Regenbogen": 1, "Sonnenschein": 2, "Vom Meer": 2, "Winnetou": 2 } },
+      { text: "°🫧•𖨆٭ šʈ𝐞𝚛𝐧ʈά𝑙𝐞𝚛꙳○𖨆°", sound: "musik/sterntaler.mp3", points: { "Christ": 1, "Excalibur": 1 } },
+      { text: "＊*•̩̩͙✩•̩̩͙*˚Ꭲศꫛn𝙜σ*•̩̩͙✩•̩̩͙*˚＊", sound: "musik/tango.mp3", points: { "Crazy Horse": 1, "Desperado": 1 } },
+      { text: "❣𓊈Vศ𝚐𝗮๒𝘶ท𝕕𓊉❣", sound: "musik/vagabund.mp3", points: { "Batman": 2, "Courage": 1, "Holgerson": 1, "Judas": 1, "Rasputin": 1, "Shaggy": 2, "Thanatos": 1, "Whisky": 2, "Tarzan": 1, "Vagabund": 2, "Woodstock": 2, "Verleihnix": 1 } },
+      { text: "☆_♡ ○_ᵂ𝑖𝚛多𝒆ļ𝐰𝐢ɳ𝕕_○ ♡_☆",sound: "musik/wirbelwind.mp3", points: { "Chaotica": 2, "Nemo": 1, "Störenfried": 1, "Wildchild": 1, "Urmel": 1 } },
+      { text: "×ºᙢ⊙𝓻ᶢϵ𝓷šţϵ𝓻𝓷º×",sound: "musik/morgenstern.mp3", points: { "Excalibur": 1 } }
+    ]
+  },
+
+
+        {
+  image: "karte/questionlotr.png",
+        cursor: "cursor-ring",
+    answers: [
+       {
+      image: "bild/jrpgtolkien.jpg", sound: "musik/dracarys.mp3",
+      points: { "Champagna": 1, "Doktor": 1, "Grammphon": 1 }
+    },
+       {
+      image: "bild/badring.jpg",sound: "musik/dracarys.mp3",
+      points: { "Blecherne": 2, "Imperial Purity": 1, "Pain": 1, "Satan": 1, "Sputnik": 1, "Don Armani Karlheinz": 1, "Theiler": 1, "Verleihnix": 2 }
+    },
+       {
+      image: "bild/evileye.jpg",sound: "musik/dracarys.mp3",
+      points: { "Anakin Skywalker": 2, "Alemmania": 2, "Colonia": 2, "Eisenstein": 1, "Lucifer": 2, "Popcorn": 1, "Störenfried": 1, "Satan": 1, "Sturmhard": 1, "Verleihnix": 1 }
+    },
+             {
+      image: "bild/uggs.png",sound: "musik/dracarys.mp3",
+      points: { "Axel Schweiß": 2, "Großherzog": 1, "Hummer": 1, "Störenfried": 1 }
+    },
+             {
+      image: "bild/sneaker.png",sound: "musik/dracarys.mp3",
+      points: { "Bandito": 1, "Judas": 1, "Knirpsi": 1, "Puhbert": 1, "Pinocchio": 1 }
+    },
+       {
+      image: "bild/colin.png",sound: "musik/dracarys.mp3",
+      points: { "Chaotica": 1, "Fanta": 1, "Junge": 1, "Kain": 1, "Nemo": 2, "Nussi": 1, "Pinocchio": 1, "Peanut": 1, "Scheißerle": 1, "Urmel": 1 }
+    },
+          {
+      image: "bild/tree.png",sound: "musik/dracarys.mp3",
+      points: { "Atomfried": 1, "Bierstübl": 1, "Frodewin": 1, "Klee": 1, "Lenin": 1, "Nelkenheini": 1, "Nemo": 1, "Ohlove": 1, "Pepsi Carola": 2, "Pi": 1, "Sonnenschein": 1, "Shaggy": 1, "Tarzan": 1, "Kirsche": 1, "Woodstock": 2 }
+    },
+       {
+      image: "bild/horse.jpg",sound: "musik/dracarys.mp3",
+      points: { "Bluebell": 2, "Cinderella Melodie": 2, "Crazy Horse": 1, "Chanel": 1, "Herbstwind": 1, "Milka": 1, "Ohlove": 1, "Regenbogen": 1, "Rosenherz": 1, "Schneewittchen": 1, "Wildwest": 1, "Shaklyn": 1, "Schnucki": 1, "Prinzessin": 1, "Winnetou": 2 }
+    },
+       {
+      image: "bild/witch.png",sound: "musik/dracarys.mp3",
+      points: { "Blitz": 1, "Berlin": 1, "Excalibur": 2, "Rasputin": 2, "Smoky": 1, "Thanatos": 1 }
+    },
+       {
+      image: "bild/eragon.jpg",sound: "musik/dracarys.mp3",
+      points: { "Batman": 1, "Courage": 1, "Christ": 1, "Dee-Jay": 1, "König": 2, "Matt Eagle": 1, "Micki Lauda": 1, "Prestige": 2, "Regen": 1, "Superman": 2, "Shogun": 2, "Vagabund": 2 }
+    }
+    ]
+  },
+
+      {
+  image: "karte/questionmusic.png",
+    cursor: "cursor-music",
+    answers: [
+      { text: "Classic Fade Out",sound: "musik/byebye1.mp3", points: { "Bandito": 1, "Holgerson": 1, "Peanut": 1, "Regen": 1, "Superman": 1 } },
+      { text: "Abruptly and loud",sound: "musik/byebye2.mp3", points: { "Atomfried": 1, "Axel Schweiß": 1, "Alemmania": 2, "Blitz": 1, "Bierstübl": 1, "Blecherne": 1, "Chaotica": 1, "Eisenstein": 1, "Großherzog": 2, "Hummer": 1, "König": 1, "Lenin": 1, "Popcorn": 1, "Störenfried": 1, "Shogun": 2, "Theiler": 1 } },
+      { text: "A capella finish",sound: "musik/byebye3.mp3", points: { "Apple": 1, "Cinderella Melodie": 1, "Frodewin": 1, "Klee": 1, "Matt Eagle": 1, "Milka": 1, "Ohlove": 1, "Rosenherz": 1, "Sonnenschein": 1, "Prinzessin": 1 } },
+      { text: "Different cool outro",sound: "musik/byebye4.mp3", points: { "Champagna": 1, "Jazz": 2 } },
+      { text: "Chorus instrumental",sound: "musik/byebye6.mp3", points: { "Bluebell": 2, "Nelkenheini": 1, "Smoky": 1, "Woodstock": 1  } },
+      { text: "With the same line it started with",sound: "musik/byebye7.mp3", points: { "Anakin Skywalker": 1, "Batman": 1, "Christ": 2, "Colonia": 1, "Nemo": 2 } },
+      { text: "Going slower and slower",sound: "musik/byebye8.mp3", points: { "Pi": 1, "Whisky": 1 } },
+      { text: "Going faster and faster",sound: "musik/byebye9.mp3", points: { "Ferrari": 2, "Imperial Purity": 1, "Knirpsi": 1, "Lucifer": 1, "McDonald": 1, "Micki Lauda": 1, "Pinocchio": 1, "Scheißerle": 1, "Sturmhard": 1, "Desperado": 1, "Nussi": 1 } },
+      { text: "Retro vinyl stop",sound: "musik/byebye5.mp3", points: { "Berlin": 1, "Dee-Jay": 2, "Grammophon": 2, "Sputnik": 2, "Wildwest": 2 } }
+    ]
+  }
+];
+
+
+let current = 0;
+let injectedQuestion = null;
+let currentSound = null;
+let isSecretQuestion = false;
+let secretSound = new Audio("musik/secret.mp3");
+secretSound.loop = true;
+secretSound.volume = 0.25;
+
+let specialSecretSound = new Audio("musik/specialsound.mp3");
+specialSecretSound.loop = true;
+specialSecretSound.volume = 0.25;
+
+
+const scores = {
+  "Anakin Skywalker": 0,
+  "Atomfried": 0,
+  "Apple": 0, 
+  "Axel Schweiß": 0,
+  "Alemmania": 0,
+  "Blitz": 0, 
+  "Batman": 0,
+  "Berlin": 0,
+  "Bandito": 0,
+  "Bierstübl": 0,
+  "Blecherne": 0,
+  "Bluebell": 0,
+  "Champagna": 0,
+  "Courage": 0,
+  "Cinderella Melodie": 0,
+  "Christ": 0,
+  "Crazy Horse": 0,
+  "Chanel": 0, 
+  "Chaotica": 0,
+  "Colonia": 0,
+  "Desperado": 0, 
+  "Dee-Jay": 0,
+  "Don Armani Karlheinz": 0,
+  "Doktor": 0,
+  "Excalibur": 0,
+  "Eisenstein": 0,
+  "Fanta": 0,
+  "Frodewin": 0,
+  "Ferrari": 0,
+  "Großherzog": 0, 
+  "Grammophon": 0,
+  "Gucci": 0,
+  "Hummer": 0,
+  "Herbstwind": 0,
+  "Holgerson": 0,
+  "Imperial Purity": 0,
+  "Jazz": 0,
+  "Judas": 0,
+  "Junge": 0,
+  "Katzbachine": 0,
+  "König": 0,
+  "Kirsche": 0,
+  "Klee": 0,
+  "Knirpsi": 0,
+  "Kain": 0,
+  "Lucifer": 0,
+  "Lenin": 0,
+  "Leonardo da Vinci Franz": 0,
+  "Matt Eagle": 0,
+  "Micki Lauda": 0,
+  "Milka": 0,
+  "McDonald": 0,
+  "Nelkenheini": 0,
+  "Nussi": 0,
+  "Nemo": 0,
+  "Ohlove": 0,
+  "Pain": 0,
+  "Pepsi Carola": 0,
+  "Puhbert": 0,
+  "Pinocchio": 0,
+  "Pfefferminza": 0, 
+  "Peanut": 0,
+  "Porsche": 0,
+  "Prinzessin": 0,
+  "Puppe": 0,
+  "Popcorn": 0,
+  "Prestige": 0,
+  "Pi": 0,
+  "Regen": 0,
+  "Regenbogen": 0,
+  "Rasputin": 0, 
+  "Rosenherz": 0,
+  "Scheißerle": 0,
+  "Stone": 0,
+  "Störenfried": 0,
+  "Schneewittchen": 0,
+  "Superman": 0,
+  "Sturmhard": 0,
+  "Satan": 0,
+  "Smoky": 0,
+  "Sputnik": 0,
+  "Sonnenschein": 0,
+  "Seniorina": 0,
+  "Shaggy": 0,
+  "Shogun": 0,
+  "Siebenstern": 0,
+  "Sexmus Ronny": 0,
+  "Schnucki": 0,
+  "Shaklyn": 0,
+  "Tarzan": 0,
+  "Thanatos": 0,
+  "Theiler": 0,
+  "Urmel": 0,
+  "Vaginia": 0,
+  "Vagabund": 0,
+  "Verleihnix": 0,
+  "Vom Meer": 0,
+  "Wildchild": 0,
+  "Whisky": 0,
+  "Winnetou": 0,
+  "Wildwest": 0,
+  "Waldmeister": 0,
+  "Woodstock": 0,
+  "Test": 0
+};
+
+const questionEl = document.getElementById("question");
+const answersEl = document.getElementById("answers");
+
+const exclusiveNames = [
+  "Don Armani Karlheinz",
+  "Pepsi Carola",
+  "Anakin Skywalker",
+  "Cinderella Melodie",
+  "Imperial Purity",
+  "Leonardo da Vinci Franz",
+  "Axel Schweiß"
+];
+
+const priorityNames = [
+  "Kaiser",
+  "König",
+  "Prinzessin",
+  "Doktor",
+  "Großherzog",
+  "Seniorina",
+  "Judas"
+];
+
+
+function startTest() {
+
+    // Browser Audio freischalten
+  const unlock = new Audio();
+  unlock.play().catch(()=>{});
+
+  document.getElementById("start").classList.add("hidden");
+  document.getElementById("quiz").classList.remove("hidden");
+  showQuestion();
+}
+
+function showQuestion() {
+
+   isSecretQuestion = !!injectedQuestion;
+
+  const q = injectedQuestion || questions[current];
+  injectedQuestion = null;
+  answersEl.innerHTML = "";
+  questionEl.innerHTML = "";
+
+if (isSecretQuestion) {
+  if (q.specialMusic) {
+    secretSound.pause();
+    secretSound.currentTime = 0;
+
+    specialSecretSound.currentTime = 0;
+    specialSecretSound.play().catch(err => console.log(err));
+    
+  } else {
+    specialSecretSound.pause();
+    specialSecretSound.currentTime = 0;
+
+    secretSound.currentTime = 0;
+    secretSound.play().catch(err => console.log(err));
+  }
+
+  document.body.classList.add("secret-mode");
+} else {
+  secretSound.pause();
+  secretSound.currentTime = 0;
+
+  specialSecretSound.pause();
+  specialSecretSound.currentTime = 0;
+
+  document.body.classList.remove("secret-mode");
+}
+  if (q.cursor) {
+    document.body.className = q.cursor || "";
+  
+}
+
+  if (q.image) {
+    const img = document.createElement("img");
+    img.src = q.image;
+    img.className = "question-image";
+    questionEl.appendChild(img);
+  } else if (q.text) {
+    const h1 = document.createElement("h1");
+    h1.textContent = q.text;
+    questionEl.appendChild(h1);
+  }
+
+
+const hasImages = q.answers.some(a => a.image);
+
+if (hasImages) {
+  if (q.layout === "vertical") {
+    answersEl.className = "answers-vertical";
+  } else {
+    answersEl.className = "answers-grid";
+  }
+} 
+else if (q.layout === "two-col") {
+  answersEl.className = "answers-two-col";
+} 
+else {
+  answersEl.className = "";
+}
+
+
+ q.answers.forEach(a => {
+
+
+if (a.image) {
+  const tile = document.createElement("div");
+  tile.className = "image-answer";
+
+  if (q.layout === "vertical") {
+    tile.classList.add("vertical");
+  }
+
+  tile.innerHTML = `<img src="${a.image}" alt="">`;
+
+  // Hover-Sound für Bildantworten
+  let sound;
+
+  if (a.sound) {
+    sound = new Audio(a.sound);
+    sound.volume = 0.5;
+
+    tile.addEventListener("mouseenter", () => {
+      currentSound = sound;
+      sound.currentTime = 0;
+      sound.play().catch(() => {});
+    });
+
+    tile.addEventListener("mouseleave", () => {
+      sound.pause();
+      sound.currentTime = 0;
+    });
+  }
+
+  // Klick
+  tile.onclick = () => answer(a.points, a.sequence, a.secret);
+
+  answersEl.appendChild(tile);
+}
+
+  else {
+    const btn = document.createElement("button");
+    btn.textContent = a.text;
+
+    // 👉 Audio vorbereiten (einmal!)
+let sound;
+
+    // Hover Sound
+if (a.sound) {
+  sound = new Audio(a.sound);
+  sound.volume = 0.5;
+
+         // 👉 Hover START
+  btn.addEventListener("mouseenter", () => {
+
+  currentSound = sound;
+
+  sound.currentTime = 0;
+  sound.play().catch(()=>{});
+});
+
+  // 👉 Hover ENDE
+  btn.addEventListener("mouseleave", () => {
+    sound.pause();
+    sound.currentTime = 0;
+      });
+    }
+
+    // Klick
+    btn.onclick = () => {
+      answer(a.points, a.sequence, a.secret);
+    };
+
+    answersEl.appendChild(btn);
+  }
+
+});
+
+
+function answer(points, sequence, secret) {
+
+  if (isSecretQuestion) {
+  secretSound.pause();
+  secretSound.currentTime = 0;
+}
+ if (currentSound) {
+    currentSound.pause();
+    currentSound.currentTime = 0;
+  }
+
+  for (const key in points) {
+    if (!(key in scores)) scores[key] = 0;
+    scores[key] += points[key];
+  }
+
+  if (secret) {
+    injectedQuestion = secret;
+
+  }
+
+
+  if (sequence) {
+    showSequence(sequence);
+    return;
+  }
+
+
+if (!isSecretQuestion) {
+  current++;
+}
+  current < questions.length ? showQuestion() : showResult();
+}
+
+function showResult() {
+  document.getElementById("quiz").classList.add("hidden");
+  document.getElementById("result").classList.remove("hidden");
+
+  const resultList = document.getElementById("resultList");
+  resultList.innerHTML = "";
+  const finalNameEl = document.getElementById("finalName");
+
+
+const sorted = Object.entries(scores)
+  .filter(([key, value]) => value > 0)
+  .map(([key, value]) => ({
+    key,
+    score: value
+  }))
+  .sort((a, b) => b.score - a.score)
+  .slice(0, 10);
+
+const maxScore = sorted[0]?.score || 1;
+
+const top1 = sorted[0]?.key;
+const top2 = sorted[1]?.key;
+
+let first = top1;
+let second = top2;
+let displayName = "";
+
+if (exclusiveNames.includes(top1)) {
+  displayName = top1;
+}
+else if (exclusiveNames.includes(top2)) {
+  displayName = top2;
+}
+else {
+  // Priority prüfen
+  if (priorityNames.includes(top2) && !priorityNames.includes(top1)) {
+    first = top2;
+    second = top1;
+  }
+
+  displayName = `${first} ${second}`;
+}
+
+finalNameEl.innerHTML = `
+  <div class="world-card">
+    <img src="welt.gif" class="result-image">
+    <div class="world-card-text">
+      <div class="welcome-text">Welcome to earth:</div>
+<div class="name-text">${displayName}</div>
+    </div>
+  </div>
+`;
+
+
+  // Balkenliste
+sorted.forEach(item => {
+
+  const width = (item.score / maxScore) * 100;
+
+  const pointText = item.score === 1
+  ? "1 Punkt"
+  : `${item.score} Points`;
+
+  const row = document.createElement("div");
+  row.className = "result-item";
+
+  row.innerHTML = `
+    <div class="result-header">
+      <span>${item.key}</span>
+<span>${pointText}</span>
+    </div>
+    <div class="bar-bg">
+      <div class="bar-fill"></div>
+    </div>
+  `;
+
+  resultList.appendChild(row);
+
+  setTimeout(() => {
+    row.querySelector(".bar-fill").style.width = width + "%";
+  }, 100);
+});
+
+}
+
+function showSequence(src) {
+
+  document.getElementById("quiz").classList.add("hidden");
+
+  const seq = document.getElementById("sequence");
+  const img = document.getElementById("sequenceImg");
+
+img.src = src + "?t=" + Date.now();
+  setTimeout(() => img.src = src, 10); // GIF neu starten
+
+  seq.classList.remove("hidden");
+
+  setTimeout(() => {
+
+    seq.classList.add("hidden");
+
+    current++;
+
+    if (current < questions.length) {
+      document.getElementById("quiz").classList.remove("hidden");
+      showQuestion();
+    } else {
+      showResult();
+    }
+
+  }, 10000);
+
+}
+
+
+  }
+
+
+</script>
+
+</body>
+</html>
